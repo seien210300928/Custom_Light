@@ -1,3 +1,4 @@
+
 plugins {
     id 'java-library'
     id 'maven-publish'
@@ -14,6 +15,24 @@ repositories {
 
 base {
     archivesName = mod_id
+}
+jar {
+    // 1. 显式定义基础名和分类器（避免属性解析异常）
+    def jarBaseName = "Custom_Light"
+    def jarClassifier = "${project.minecraft_version}-Neoforge"
+    def jarVersion = project.mod_version
+
+    // 2. 拼接文件名（直接用定义的变量，而非 archiveBaseName/archiveClassifier 属性）
+    archiveFileName = "${jarBaseName}-${jarClassifier}-${jarVersion}.jar"
+
+    // 可选：排除签名文件
+    exclude('META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA')
+    exclude 'data/immersiveengineering/recipe/cloche/*.js'
+
+    // 3. 兜底：强制设置 Gradle 原生属性（避免解析异常）
+    archiveBaseName = jarBaseName
+    archiveClassifier = jarClassifier
+    archiveVersion = jarVersion
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -111,6 +130,8 @@ dependencies {
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
+
+    implementation 'com.moandjiezana.toml:toml4j:0.7.2'
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
