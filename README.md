@@ -20,14 +20,14 @@ When a client joins a server with this mod installed, it will automatically sync
 The default configuration files for the client and server are identical. Below is the default configuration example and format explanation:
 ```toml
 # Custom Light config
-# 格式: `[light]` 下方的 "命名空间:方块ID" = 亮度(0-15)
+# 格式: [light] 下方的 "命名空间:方块ID" = 亮度(0-15)
 # Format: Under [light], "namespace:block ID" = light level (0-15)
 [light]
 "minecraft:torch" = 15
 "minecraft:wall_torch" = 15
 ```
 ### 格式规则<br>Format Rules
-1. 配置项需写在 [light] 节点下；<br>Configuration items must be written under the `[light]` node;
+1. 配置项需写在 `[light]` 节点下；<br>Configuration items must be written under the `[light]` node;
 2. 每行格式为：`"命名空间:方块ID" = 亮度`；<br>Each line follows the format: `"namespace:block ID" = light level`;
 3. 亮度值范围为 0-15（0 无亮度，15 最大亮度）；<br>The light level ranges from 0 to 15 (0 = no light, 15 = maximum light);
 4. 理论上支持所有 Minecraft 原版方块及模组拓展方块（需填写正确的命名空间和方块 ID）；<br>In theory supports all vanilla Minecraft blocks and mod-added blocks (correct namespace and block ID must be provided);
