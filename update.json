@@ -1,11 +1,7 @@
 {
-  "versionName": "1.0-bata",
-  "versionCode": 1,
-  "versionFormat": "%versionName%",
-  "changelogs": {
-    "1.0.0": [
-    ]
-  },
-  "updateURL": "https://github.com/seien210300928/Custom_Light.git/releases/tag/1.0-bata",
-  "downloadURL": "https://github.com/seien210300928/Custom_Light.git/releases/download/1.0-bata/Custom_Light-1.21.1-Neoforge-21.1.170-1.0-bata.jar"
+  "homepage": "https://github.com/seien210300928/Custom_Light",
+  "promos": {
+    "1.21.1-recommended": "1.0-bata",
+    "1.21.1-latest": "1.0-bata"
+  }
 }
