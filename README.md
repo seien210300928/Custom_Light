@@ -20,7 +20,7 @@ When a client joins a server with this mod installed, it will automatically sync
 The default configuration files for the client and server are identical. Below is the default configuration example and format explanation:
 ```toml
 # Custom Light config
-# 格式: [light] 下方的 "命名空间:方块ID" = 亮度(0-15)
+# 格式: `[light]` 下方的 "命名空间:方块ID" = 亮度(0-15)
 # Format: Under [light], "namespace:block ID" = light level (0-15)
 [light]
 "minecraft:torch" = 15
