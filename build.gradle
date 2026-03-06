@@ -19,7 +19,7 @@ base {
 jar {
     // 1. 显式定义基础名和分类器（避免属性解析异常）
     def jarBaseName = "Custom_Light"
-    def jarClassifier = "${project.minecraft_version}-Neoforge"
+    def jarClassifier = "${project.minecraft_version}-Neoforge-${project.neo_version}"
     def jarVersion = project.mod_version
 
     // 2. 拼接文件名（直接用定义的变量，而非 archiveBaseName/archiveClassifier 属性）
