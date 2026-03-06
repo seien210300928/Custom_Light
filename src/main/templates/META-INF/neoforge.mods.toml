@@ -15,6 +15,7 @@ license = "${mod_license}"
 # A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]] #mandatory
 # The modid of the mod
+logoFile = "mod.png"
 environment = "BOTH"
 modId = "${mod_id}" #mandatory
 # The version number of the mod
