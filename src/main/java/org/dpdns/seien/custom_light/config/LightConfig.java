@@ -78,8 +78,9 @@ public class LightConfig {
         try {
             path.toFile().getParentFile().mkdirs();
             String content = """
-                    # Custom Light 配置文件
-                    # 格式: [light] 下的 "方块完整ID" = 亮度值(0-15)
+                    # Custom Light config
+                    # 格式: [light] 下方的 "命名空间:方块ID" = 亮度(0-15)
+                    # Format: Under [light], "namespace:block ID" = light level (0-15)
                     [light]
                     "minecraft:torch" = 15
                     "minecraft:wall_torch" = 15
