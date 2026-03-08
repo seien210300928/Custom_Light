@@ -83,7 +83,6 @@ public class LightConfig {
                     # Format: Under [light], "namespace:block ID" = light level (0-15)
                     [light]
                     "minecraft:torch" = 15
-                    "minecraft:wall_torch" = 15
                     """;
             java.nio.file.Files.writeString(path, content);
             LOGGER.info("已创建默认配置文件: {}", path);
