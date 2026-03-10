@@ -24,15 +24,32 @@ public class ClientDisconnectHandler {
         // 确保是客户端玩家退出
         if (!event.getEntity().level().isClientSide) return;
 
+        LOGGER.info("玩家退出服务器，开始清理服务器配置文件...");
+
+        Path serverConfigPath = FMLPaths.CONFIGDIR.get().resolve("custom_light_Server.toml");
+        boolean deleted = false;
         try {
-            Path serverConfigPath = FMLPaths.CONFIGDIR.get().resolve("custom_light_Server.toml");
             if (Files.exists(serverConfigPath)) {
+                // 尝试删除文件
                 Files.delete(serverConfigPath);
-                LOGGER.info("已删除服务器配置文件，恢复客户端配置");
+                LOGGER.info("成功删除服务器配置文件: {}", serverConfigPath);
+                deleted = true;
+            } else {
+                LOGGER.info("服务器配置文件不存在，无需删除");
             }
-            LightConfig.loadClient();  // 重新加载客户端配置
         } catch (Exception e) {
-            LOGGER.error("处理客户端退出时出错", e);
+            LOGGER.error("删除服务器配置文件失败", e);
         }
+
+        // 无论是否删除，都重新加载客户端配置
+        try {
+            LightConfig.loadClient();
+            LOGGER.info("已重新加载客户端配置，当前配置项：");
+            LightConfig.LIGHT_MAP.forEach((id, val) -> LOGGER.info("  {} = {}", id, val));
+        } catch (Exception e) {
+            LOGGER.error("重新加载客户端配置失败", e);
+        }
+
+        // 如果删除失败，可以尝试在进入世界时再次清理（由 ClientWorldLoadHandler 负责）
     }
 }
