@@ -14,7 +14,7 @@ license = "${mod_license}"
 #issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
 # A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]] #mandatory
-displayURL="https://space.bilibili.com/291019982"
+displayURL = "https://space.bilibili.com/291019982"
 updateJSONURL = "https://raw.githubusercontent.com/seien210300928/Custom_Light/refs/heads/master/update.json"
 logoFile = "mod.png"
 environment = "BOTH"
