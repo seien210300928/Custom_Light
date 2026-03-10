@@ -70,6 +70,17 @@ public class LightConfig {
         LIGHT_MAP.forEach((id, val) -> LOGGER.info("  {} = {}", id, val));
     }
 
+    // === 新增的两个方法 ===
+    /** 显式加载客户端配置文件（custom_light_Client.toml） */
+    public static void loadClient() {
+        load(true);
+    }
+
+    /** 显式加载服务端配置文件（custom_light_Server.toml） */
+    public static void loadServer() {
+        load(false);
+    }
+
     public static int getBrightness(ResourceLocation id, int defaultValue) {
         return LIGHT_MAP.getOrDefault(id, defaultValue);
     }
