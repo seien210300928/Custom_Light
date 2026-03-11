@@ -18,8 +18,8 @@ public class PlayerLoginHandler {
     @SubscribeEvent
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
-            // 如果是集成服务器（单机/局域网），不发送配置包，因为客户端应使用自己的配置
-            if (!player.getServer().isDedicatedServer()) {
+            // 如果是集成服务器（单机/局域网），不发送配置包
+            if (!player.level().getServer().isDedicatedServer()) {
                 return;
             }
 

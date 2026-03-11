@@ -21,7 +21,7 @@ public class ClientDisconnectHandler {
 
     @SubscribeEvent
     public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event) {
-        if (!event.getEntity().level().isClientSide) return;
+        if (!event.getEntity().level().isClientSide()) return;
 
         LOGGER.info("退出服务器，切回客户端配置");
         LightConfig.useClientConfig(); // 切换到客户端配置

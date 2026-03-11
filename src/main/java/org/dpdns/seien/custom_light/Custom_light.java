@@ -15,7 +15,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -25,9 +25,6 @@ import org.dpdns.seien.custom_light.network.ConfigSyncPacket;
 import org.slf4j.Logger;
 
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import java.nio.file.Path;
-import java.nio.file.Files;
-import net.neoforged.fml.loading.FMLPaths;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Custom_light.MODID)
@@ -76,7 +73,14 @@ public class Custom_light {
 
     public Custom_light(IEventBus modEventBus, ModContainer modContainer) {
 
-        if (FMLEnvironment.dist == Dist.CLIENT) {
+        boolean isClient;
+        try {
+            Class.forName("net.minecraft.client.Minecraft");
+            isClient = true;
+        } catch (ClassNotFoundException e) {
+            isClient = false;
+        }
+        if (isClient) {
             LightConfig.loadClient();
         } else {
             LightConfig.loadServer();
