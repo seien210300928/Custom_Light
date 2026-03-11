@@ -1,5 +1,5 @@
-![NeoForge](https://img.shields.io/badge/NeoForge-21.1.170-blue)
-![Minecraft](https://img.shields.io/badge/Minecraft-1.21.1-green)
+![NeoForge](https://img.shields.io/badge/NeoForge-21.8.9-blue)
+![Minecraft](https://img.shields.io/badge/Minecraft-1.21.8-green)
 # 自定义亮度<br>Custom Light
 
 ### 概述<br>Overview
