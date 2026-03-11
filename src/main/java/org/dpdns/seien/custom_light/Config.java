@@ -50,9 +50,6 @@ public class Config {
         magicNumberIntroduction = MAGIC_NUMBER_INTRODUCTION.get();
 
         // convert the list of strings into a set of items
-        items = ITEM_STRINGS.get().stream()
-                .map(itemName -> BuiltInRegistries.ITEM.get(ResourceLocation.parse(itemName)))
-                .flatMap(Optional::stream)               // 展开 Optional，过滤掉空值
-                .map(Holder.Reference::value)             // 从 Holder 中获取 Item 对象
-                .collect(Collectors.toSet());    }
+        items = ITEM_STRINGS.get().stream().map(itemName -> BuiltInRegistries.ITEM.get(ResourceLocation.parse(itemName))).collect(Collectors.toSet());
+    }
 }
