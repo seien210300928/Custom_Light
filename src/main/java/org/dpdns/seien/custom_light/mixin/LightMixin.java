@@ -1,7 +1,7 @@
 package org.dpdns.seien.custom_light.mixin;
 
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour.BlockStateBase;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,7 +22,7 @@ public abstract class LightMixin {
     private void modifyLight(CallbackInfoReturnable<Integer> cir) {
         BlockState state = asState();
         Block block = state.getBlock();
-        ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
+        Identifier id = BuiltInRegistries.BLOCK.getKey(block);
         int configured = LightConfig.getBrightness(id, -1); // 传入 -1 表示默认值不存在
         if (configured != -1) { // 如果配置中存在该方块
             cir.setReturnValue(configured); // 强制设置为配置值

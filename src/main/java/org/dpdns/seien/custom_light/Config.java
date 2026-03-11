@@ -2,7 +2,7 @@ package org.dpdns.seien.custom_light;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -40,7 +40,7 @@ public class Config {
     public static Set<Item> items;
 
     private static boolean validateItemName(final Object obj) {
-        return obj instanceof String itemName && BuiltInRegistries.ITEM.containsKey(ResourceLocation.parse(itemName));
+        return obj instanceof String itemName && BuiltInRegistries.ITEM.containsKey(Identifier.parse(itemName));
     }
 
     @SubscribeEvent
@@ -51,7 +51,7 @@ public class Config {
 
         // convert the list of strings into a set of items
         items = ITEM_STRINGS.get().stream()
-                .map(itemName -> BuiltInRegistries.ITEM.get(ResourceLocation.parse(itemName)))
+                .map(itemName -> BuiltInRegistries.ITEM.get(Identifier.parse(itemName)))
                 .flatMap(Optional::stream)               // 展开 Optional，过滤掉空值
                 .map(Holder.Reference::value)             // 从 Holder 中获取 Item 对象
                 .collect(Collectors.toSet());    }

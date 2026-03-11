@@ -10,7 +10,7 @@ version = mod_version
 group = mod_group_id
 
 repositories {
-    mavenLocal()
+
 }
 
 base {
@@ -120,7 +120,6 @@ dependencies {
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-
     implementation 'com.moandjiezana.toml:toml4j:0.7.2'
 }
 

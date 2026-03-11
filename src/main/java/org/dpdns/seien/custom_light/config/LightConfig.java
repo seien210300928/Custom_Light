@@ -4,7 +4,7 @@ import com.electronwill.nightconfig.core.CommentedConfig;
 import com.electronwill.nightconfig.core.io.ParsingMode;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.toml.TomlParser;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.fml.loading.FMLPaths;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,11 +20,11 @@ public class LightConfig {
     private static final String SERVER_FILE = "custom_light_Server.toml";
 
     // 存储两份配置
-    private static final Map<ResourceLocation, Integer> CLIENT_MAP = new HashMap<>();
-    private static final Map<ResourceLocation, Integer> SERVER_MAP = new HashMap<>();
+    private static final Map<Identifier, Integer> CLIENT_MAP = new HashMap<>();
+    private static final Map<Identifier, Integer> SERVER_MAP = new HashMap<>();
 
     // 当前激活的配置映射（指向 CLIENT_MAP 或 SERVER_MAP）
-    private static Map<ResourceLocation, Integer> activeMap = CLIENT_MAP;
+    private static Map<Identifier, Integer> activeMap = CLIENT_MAP;
     private static boolean usingServer = false;
 
     // ------------------ 加载方法 ------------------
@@ -62,7 +62,7 @@ public class LightConfig {
                     if (value instanceof Number) {
                         int brightness = ((Number) value).intValue();
                         brightness = Math.min(15, Math.max(0, brightness));
-                        SERVER_MAP.put(ResourceLocation.parse(key), brightness);
+                        SERVER_MAP.put(Identifier.parse(key), brightness);
                     } else {
                         LOGGER.warn("服务器配置项 {} 的值不是数字，已忽略", key);
                     }
@@ -92,14 +92,14 @@ public class LightConfig {
 
     // ------------------ 查询方法 ------------------
 
-    public static int getBrightness(ResourceLocation id, int defaultValue) {
+    public static int getBrightness(Identifier id, int defaultValue) {
         return activeMap.getOrDefault(id, defaultValue);
     }
 
     // ------------------ 内部辅助方法 ------------------
 
     /** 从指定文件加载配置到指定的映射 */
-    private static void loadFromFile(Map<ResourceLocation, Integer> map, String fileName) {
+    private static void loadFromFile(Map<Identifier, Integer> map, String fileName) {
         map.clear();
         Path configPath = FMLPaths.CONFIGDIR.get().resolve(fileName);
 
@@ -117,7 +117,7 @@ public class LightConfig {
                     if (value instanceof Number) {
                         int brightness = ((Number) value).intValue();
                         brightness = Math.min(15, Math.max(0, brightness));
-                        map.put(ResourceLocation.parse(key), brightness);
+                        map.put(Identifier.parse(key), brightness);
                     } else {
                         LOGGER.warn("配置项 {} 的值不是数字，已忽略", key);
                     }
