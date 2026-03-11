@@ -33,8 +33,8 @@ public class ChunkLoadHandler {
         processedChunks.add(key);
 
         BlockPos.betweenClosedStream(
-                chunk.getPos().getMinBlockX(), level.getMinY(), chunk.getPos().getMinBlockZ(),
-                chunk.getPos().getMaxBlockX(), level.getMaxY() - 1, chunk.getPos().getMaxBlockZ()
+                chunk.getPos().getMinBlockX(), level.getMinBuildHeight(), chunk.getPos().getMinBlockZ(),
+                chunk.getPos().getMaxBlockX(), level.getMaxBuildHeight() - 1, chunk.getPos().getMaxBlockZ()
         ).forEach(pos -> {
             // 无论方块是否在配置中，都触发光照更新
             level.getLightEngine().checkBlock(pos);
