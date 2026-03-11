@@ -1,5 +1,6 @@
 package org.dpdns.seien.custom_light;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -10,6 +11,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,7 +19,7 @@ import java.util.stream.Collectors;
 
 // An example config class. This is not required, but it's a good idea to have one to keep your config organized.
 // Demonstrates how to use Neo's config APIs
-@EventBusSubscriber(modid = Custom_light.MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = Custom_light.MODID)
 public class Config {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
@@ -48,6 +50,9 @@ public class Config {
         magicNumberIntroduction = MAGIC_NUMBER_INTRODUCTION.get();
 
         // convert the list of strings into a set of items
-        items = ITEM_STRINGS.get().stream().map(itemName -> BuiltInRegistries.ITEM.get(ResourceLocation.parse(itemName))).collect(Collectors.toSet());
-    }
+        items = ITEM_STRINGS.get().stream()
+                .map(itemName -> BuiltInRegistries.ITEM.get(ResourceLocation.parse(itemName)))
+                .flatMap(Optional::stream)               // 展开 Optional，过滤掉空值
+                .map(Holder.Reference::value)             // 从 Holder 中获取 Item 对象
+                .collect(Collectors.toSet());    }
 }

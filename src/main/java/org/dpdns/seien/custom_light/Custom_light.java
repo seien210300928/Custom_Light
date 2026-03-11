@@ -15,6 +15,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -63,17 +64,11 @@ public class Custom_light {
                 ConfigSyncPacket.TYPE,
                 ConfigSyncPacket.CODEC,
                 (data, context) -> {
-                    // 这个处理器仅在客户端被调用
                     context.enqueueWork(() -> {
-                        try {
-                            Path configPath = FMLPaths.CONFIGDIR.get().resolve("custom_light_Server.toml");
-                            Files.writeString(configPath, data.configContent());
-                            LOGGER.info("已从服务器接收配置文件: {}", configPath);
-                            // 重新加载配置（使用服务端模式）
-                            LightConfig.load(false);
-                        } catch (Exception e) {
-                            LOGGER.error("写入配置文件失败", e);
-                        }
+                        // 直接解析服务器配置到内存，并切换到服务器模式
+                        LightConfig.loadServerFromString(data.configContent());
+                        LightConfig.useServerConfig();
+                        LOGGER.info("已从服务器接收配置并切换到服务器模式");
                     });
                 }
         );
@@ -81,7 +76,12 @@ public class Custom_light {
 
     public Custom_light(IEventBus modEventBus, ModContainer modContainer) {
 
-        LightConfig.load();
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            LightConfig.loadClient();
+        } else {
+            LightConfig.loadServer();
+        }
+
         modEventBus.addListener(this::registerPackets);
 
         // Register the commonSetup method for modloading
@@ -130,7 +130,7 @@ public class Custom_light {
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-    @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
