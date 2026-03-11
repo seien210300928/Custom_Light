@@ -18,13 +18,16 @@ public class PlayerLoginHandler {
     @SubscribeEvent
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
+            // 如果是集成服务器（单机/局域网），不发送配置包，因为客户端应使用自己的配置
+            if (!player.getServer().isDedicatedServer()) {
+                return;
+            }
+
             try {
                 Path serverConfigPath = FMLPaths.CONFIGDIR.get().resolve("custom_light_Server.toml");
                 if (Files.exists(serverConfigPath)) {
                     String content = Files.readString(serverConfigPath);
                     PacketDistributor.sendToPlayer(player, new ConfigSyncPacket(content));
-                } else {
-                    // 如果服务器没有配置文件，可以选择发送一个默认内容，或忽略
                 }
             } catch (Exception e) {
                 e.printStackTrace();
