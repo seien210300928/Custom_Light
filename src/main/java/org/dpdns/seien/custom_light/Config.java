@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 // An example config class. This is not required, but it's a good idea to have one to keep your config organized.
 // Demonstrates how to use Neo's config APIs
-@EventBusSubscriber(modid = Custom_light.MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = Custom_light.MODID)
 public class Config {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
@@ -54,5 +54,6 @@ public class Config {
                 .map(itemName -> BuiltInRegistries.ITEM.get(ResourceLocation.parse(itemName)))
                 .flatMap(Optional::stream)               // 展开 Optional，过滤掉空值
                 .map(Holder.Reference::value)             // 从 Holder 中获取 Item 对象
-                .collect(Collectors.toSet());    }
+                .collect(Collectors.toSet());
+    }
 }
