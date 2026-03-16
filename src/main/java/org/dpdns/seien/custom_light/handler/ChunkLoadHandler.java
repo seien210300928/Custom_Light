@@ -3,11 +3,11 @@ package org.dpdns.seien.custom_light.handler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.dimension.DimensionType;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.level.ChunkEvent;
@@ -28,8 +28,8 @@ public class ChunkLoadHandler {
         if (!(event.getChunk() instanceof LevelChunk chunk)) return;
 
         Level level = (Level) event.getLevel();
-        ResourceKey<Level> dimension = level.dimension();
-        String key = dimension.location() + ":" + chunk.getPos().x + "," + chunk.getPos().z;
+        String levelUniqueId = String.valueOf(level.hashCode());
+        String key = levelUniqueId + ":" + chunk.getPos().x + "," + chunk.getPos().z;
 
         if (processedChunks.contains(key)) return;
         processedChunks.add(key);
@@ -53,8 +53,8 @@ public class ChunkLoadHandler {
         if (!(event.getChunk() instanceof LevelChunk chunk)) return;
 
         Level level = (Level) event.getLevel();
-        ResourceKey<Level> dimension = level.dimension();
-        String key = dimension.location() + ":" + chunk.getPos().x + "," + chunk.getPos().z;
+        String levelUniqueId = String.valueOf(level.hashCode());
+        String key = levelUniqueId + ":" + chunk.getPos().x + "," + chunk.getPos().z;
 
         processedChunks.remove(key);
     }
